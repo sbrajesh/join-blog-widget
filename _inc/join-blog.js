@@ -3,10 +3,10 @@
    $(document).ready(function(){
       
       $('.bpdev-join-blog').live('click',function(){
-         $link=$(this);
-         $url=$link.attr('href');
-         $nonce=get_var_in_url($url);
-         $id=$(this).attr('data-id');
+         var $link=$(this);
+         var $url=$link.attr('href');
+         var $nonce=get_var_in_url($url);
+         var $id=$(this).attr('data-id');
          
          $.post(ajaxurl,{action:'join_blog',
                          _wpnonce:$nonce,
