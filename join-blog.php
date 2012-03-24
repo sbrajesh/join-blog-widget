@@ -121,8 +121,9 @@ class BPDevJoinBlogWidget extends WP_Widget{
    //helper
    
    function print_role_dd($selected='subscriber'){
+      
        ?>
-       <select name="<?php $this->get_field_name('role');?>" id="<?php $this->get_field_id('role');?>">
+       <select name="<?php echo $this->get_field_name('role');?>" id="<?php echo $this->get_field_id('role');?>">
             <?php  wp_dropdown_roles($selected); ?>
        </select>
   <?php
