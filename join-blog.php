@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Join Blog Widget
  * Version:1.0
- * Plugin URI:http://buddydev.com
+ * Plugin URI:http://buddydev.com/plugins/join-blog-widget/
  * Author: Brajesh Singh
  * Author URI: http://buddydev.com
  * Description: Allow your users to join a sub blog on a multisite blog network. You can select the roles for the user/message to be shown.
