@@ -7,23 +7,28 @@
  * Author URI: https://buddydev.com
  * Description: Allow your users to join a sub blog on a multisite blog network. You can select the roles for the user/message to be shown.
  * License: GPL
- *
  */
+
+// Do not allow to access the file directly over web.
+if( ! defined( 'ABSPATH' ) ) {
+    exit( 0 );
+}
 
 /**
  * Special Note: I created this plugin to be used with My other plugin BuddyPress Multi Network(https://buddydev.com/plugins/buddypress-multi-network/).
- * It will enable sideadmins to show a widget and allow users to join their nework.
- * You can use it for other pourposes as you want.
+ * It will enable site admins to show a widget and allow users to join their network.
+ * You can use it for other purposes as you want.
  */
 class BPDevJoinBlogWidget extends WP_Widget {
 
-	function __construct( $id_base = false, $name = false, $widget_options = array(), $control_options = array() ) {
-		if ( ! $name ) {
+	public function __construct( $id_base = false, $name = false, $widget_options = array(), $control_options = array() ) {
+
+	    if ( ! $name ) {
 			$name = __( 'Join Blog Widget' );
 		}
 
 		parent::__construct( $id_base, $name, $widget_options, $control_options );
-		//I know I am burdening the widget to handle ajax request, May be a bad standart of coding but suits much better in this situation where data varies per widget
+		//I know I am burdening the widget to handle ajax request, May be a bad standard of coding but suits much better in this situation where data varies per widget
 		//hopefully, I will put it in helper in next release and use global $wp_registered_widgets
 		add_action( 'wp_ajax_join_blog', array( $this, 'add_user' ) );
 	}
@@ -50,6 +55,14 @@ class BPDevJoinBlogWidget extends WP_Widget {
 
 	}
 
+	/**
+     * Update widget settings
+     *
+	 * @param array $new_instance
+	 * @param array $old_instance
+	 *
+	 * @return array
+	 */
 	public function update( $new_instance, $old_instance ) {
 
 		$instance                    = $old_instance;
@@ -62,12 +75,15 @@ class BPDevJoinBlogWidget extends WP_Widget {
 		return $instance;
 	}
 
+	/**
+     * Display widget settings form
+	 */
 	public function form( $instance ) {
-		$default = array( 'title'           => 'Join Blog ',
+		$default = array( 'title'           => _x( 'Join Blog', 'Widget title', 'join-blog-widget' ),
 		                  'role'            => 'subscriber',
-		                  'button_text'     => __( 'Join this Blog' ),
-		                  'message_success' => __( 'You have successfully joined this blog' ),
-		                  'message_error'   => __( 'There was a problem joining this blog. Please try again later' )
+		                  'button_text'     => _x( 'Join this Blog', 'button label', 'join-blog-widget' ),
+		                  'message_success' => _x( 'You have successfully joined this blog.', 'success message on joining', 'join-blog-widget' ),
+		                  'message_error'   => _x( 'There was a problem joining this blog. Please try again later.', 'Failure message for unable to join', 'join-blog-widget' )
 		);
 		$args    = wp_parse_args( (array) $instance, $default );
 		extract( $args );
@@ -106,8 +122,10 @@ class BPDevJoinBlogWidget extends WP_Widget {
 
 	<?php }
 
-	//ajax work
 
+	/**
+     * Add user to blog via ajax
+     */
 	public function add_user() {
 		//nonce check ?
 
@@ -146,7 +164,7 @@ class BPDevJoinBlogWidget extends WP_Widget {
 
 	//helper
 
-	function print_role_dd( $selected = 'subscriber' ) {
+	private function print_role_dd( $selected = 'subscriber' ) {
 
 		?>
         <select name="<?php echo $this->get_field_name( 'role' ); ?>" id="<?php echo $this->get_field_id( 'role' ); ?>">
@@ -157,16 +175,24 @@ class BPDevJoinBlogWidget extends WP_Widget {
 
 }
 
-add_action( 'widgets_init', 'bpdev_register_join_blog_widget' );
 
+/**
+ * Register the widget
+ */
 function bpdev_register_join_blog_widget() {
 
 	register_widget( 'BPDevJoinBlogWidget' );
 }
+add_action( 'widgets_init', 'bpdev_register_join_blog_widget' );
 
+
+/**
+ * Helper class
+ */
 class BPDevJoinBlogHelper {
 
 	private static $instance;
+
 
 	private function __construct() {
 
@@ -183,16 +209,22 @@ class BPDevJoinBlogHelper {
 		return self::$instance;
 	}
 
+
+	/**
+	 * Load js
+	 */
 	public function load_js() {
 
 		$plugin_path    = plugin_dir_url( __FILE__ );
 		$plugin_js_path = $plugin_path . '_inc/join-blog.js';
-		//echo $plugin_js_path;
-		wp_enqueue_script( 'join-blog', $plugin_js_path, array( 'jquery' ), 2000 );
-		// wp_enqueue_script('join-blog');
+		wp_enqueue_script( 'join-blog-widget', $plugin_js_path, array( 'jquery' ) );
 	}
 
-	//bp creates ajaxurl, no need to define ajaxurl then
+
+	/**
+     * BuddyPress creates ajaxurl, no need to define ajaxurl then
+     * If BuddyPress is not active, add ajaxurl in the head
+     */
 	public function ajax_url() {
 		if ( function_exists( 'bp_is_active' ) ) {
 			return;
