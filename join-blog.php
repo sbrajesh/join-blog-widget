@@ -213,7 +213,7 @@ class BPDevJoinBlogHelper {
 	public function load_js() {
 
 		$plugin_path    = plugin_dir_url( __FILE__ );
-		$plugin_js_path = $plugin_path . '_inc/join-blog.js';
+		$plugin_js_path = $plugin_path . 'assets/join-blog.js';
 		wp_enqueue_script( 'join-blog-widget', $plugin_js_path, array( 'jquery' ) );
 	}
 
