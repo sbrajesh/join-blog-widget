@@ -1,9 +1,9 @@
 <?php
 /**
  * Plugin Name: Join Blog Widget
- * Version: 1.0.1
+ * Version: 1.0.2
  * Plugin URI: https://buddydev.com/plugins/join-blog-widget/
- * Author: Brajesh Singh
+ * Author: BuddyDev
  * Author URI: https://buddydev.com
  * Description: Allow your users to join a sub blog on a multisite blog network. You can select the roles for the user/message to be shown.
  * License: GPL
@@ -38,20 +38,19 @@ class BPDevJoinBlogWidget extends WP_Widget {
 		$user_id = get_current_user_id();
 		$blog_id = get_current_blog_id();
 
-		//if the user is not logged in or the user is already a member of the blog, do not show this widget
+		// if the user is not logged in or the user is already a member of the blog, do not show this widget.
 		if ( empty( $user_id ) || is_user_member_of_blog( $user_id, $blog_id ) ) {
 			return false;
 		}
 
-		extract( $args );
-		//display the widget with button to ask joining
-		echo $before_widget;
+		// display the widget with button to ask joining.
+		echo $args['before_widget'];
 		if ( ! empty( $instance['title'] ) ) {
-			echo $before_title . $instance['title'] . $after_title;
+			echo $args['before_title'] . $instance['title'] . $args['after_title'];
 		}
 
 		echo "<a data-id='{$this->id}' class='bpdev-join-blog' href='" . get_blogaddress_by_id( $blog_id ) . "?action=join-blog&_wpnonce=" . wp_create_nonce( 'join-blog-' . $this->id ) . "'>" . $instance['button_text'] . "</a>";
-		echo $after_widget;
+		echo $args['after_widget'];
 
 	}
 
@@ -86,36 +85,35 @@ class BPDevJoinBlogWidget extends WP_Widget {
 		                  'message_error'   => _x( 'There was a problem joining this blog. Please try again later.', 'Failure message for unable to join', 'join-blog-widget' )
 		);
 		$args    = wp_parse_args( (array) $instance, $default );
-		extract( $args );
 		?>
         <p>
-            <label for="<?php $this->get_field_id( 'title' ); ?>"><?php _e( 'Title' ); ?>
+            <label for="<?php $this->get_field_id( 'title' ); ?>"><?php _e( 'Title' ); ?><br/>
                 <input type="text" id="<?php $this->get_field_id( 'title' ); ?>"
-                       name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $title; ?>"/>
+                       name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo esc_attr( $args['title'] ); ?>" class="widefat"/>
             </label>
         </p>
         <p>
-            <label for="<?php $this->get_field_id( 'role' ); ?>"><?php _e( 'Role' ); ?>
-				<?php $this->print_role_dd( $role ); ?>
+            <label for="<?php $this->get_field_id( 'role' ); ?>"><?php _e( 'Role' ); ?><br/>
+				<?php $this->print_role_dd( $args['role'] ); ?>
             </label>
         </p>
         <p>
-            <label for="<?php $this->get_field_id( 'button_text' ); ?>"><?php _e( 'Join Button Label' ); ?>
+            <label for="<?php $this->get_field_id( 'button_text' ); ?>"><?php _e( 'Join Button Label' ); ?><br/>
                 <input type="text" id="<?php $this->get_field_id( 'button_text' ); ?>"
                        name="<?php echo $this->get_field_name( 'button_text' ); ?>"
-                       value="<?php echo $button_text; ?>"/>
+                       value="<?php echo $args['button_text']; ?>" class="widefat"/>
             </label>
         </p>
         <p>
             <label for="<?php $this->get_field_id( 'message_success' ); ?>"> <?php _e( 'Message on Successful Joining' ); ?>
                 <textarea id="<?php $this->get_field_id( 'message_success' ); ?>"
-                          name="<?php echo $this->get_field_name( 'message_success' ); ?>"><?php echo $message_success; ?></textarea>
+                          name="<?php echo $this->get_field_name( 'message_success' ); ?>" class="widefat"><?php echo $args['message_success']; ?></textarea>
             </label>
         </p>
         <p>
             <label for="<?php $this->get_field_id( 'message_error' ); ?>"> <?php _e( 'Error Message' ); ?>
                 <textarea id="<?php $this->get_field_id( 'message_error' ); ?>"
-                          name="<?php echo $this->get_field_name( 'message_error' ); ?>"><?php echo $message_error; ?></textarea>
+                          name="<?php echo $this->get_field_name( 'message_error' ); ?>" class="widefat"><?php echo $args['message_error']; ?></textarea>
             </label>
         </p>
 
@@ -162,8 +160,7 @@ class BPDevJoinBlogWidget extends WP_Widget {
 
 	}
 
-	//helper
-
+	// helper
 	private function print_role_dd( $selected = 'subscriber' ) {
 
 		?>
