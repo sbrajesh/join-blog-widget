@@ -42,7 +42,7 @@ class BPDevJoinBlogWidget extends WP_Widget {
 
 		if( ! $user_id && ! empty( $instance['show_to_non_logged'] ) ) {
 		    $show = true;
-        } elseif( ! is_user_member_of_blog( $user_id, $blog_id ) ) {
+        } elseif( $user_id && ! is_user_member_of_blog( $user_id, $blog_id ) ) {
 		    $show = true;
         }
 
