@@ -62,6 +62,10 @@ class BPDevJoinBlogWidget extends WP_Widget {
 			return;
 		}
 
+		$redirect_url = isset( $instance['redirect_url'] ) ? esc_url( $instance['redirect_url'] ) : '';
+
+		wp_localize_script( 'join-blog-widget', 'JOIN_BLOG_WIDGET', array( 'redirect_url' => $redirect_url ) );
+
 		// display the widget with button to ask joining.
 		echo $args['before_widget'];
 
@@ -128,7 +132,7 @@ class BPDevJoinBlogWidget extends WP_Widget {
 		$instance['role']               = $new_instance['role'];
 		$instance['show_to_non_logged'] = isset( $new_instance['show_to_non_logged'] ) ? absint( $new_instance['show_to_non_logged'] ) : 0;
 		$instance['non_logged_message'] = isset( $new_instance['non_logged_message'] ) ? $new_instance['non_logged_message'] : '';
-		$instance['redirect_url']       = esc_url( $new_instance['redirect_url'] );
+		$instance['redirect_url']       = isset( $new_instance['redirect_url'] ) ? esc_url( $new_instance['redirect_url'] ) : '';
 
 		return $instance;
 	}
@@ -150,9 +154,12 @@ class BPDevJoinBlogWidget extends WP_Widget {
 			'non_logged_message' => sprintf( __( 'Please create an account to join this site. <a href="%s">Signup Now</a>.', 'join-blog-widget' ), esc_url( wp_registration_url() ) ),
             'redirect_url'       => '',
 		);
-		$args               = wp_parse_args( (array) $instance, $default );
+
+		$args = wp_parse_args( (array) $instance, $default );
+
 		$show_to_non_logged = isset( $args['show_to_non_logged'] ) ? absint( $args['show_to_non_logged'] ) : 0;
 		$non_logged_message = isset( $args['non_logged_message'] ) ? $args['non_logged_message'] : '';
+		$redirect_url       = isset( $args['redirect_url'] ) ? esc_url( $args['redirect_url'] ) : '';
 		?>
         <p>
             <label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php _e( 'Title', 'join-blog-widget' ); ?><br/>
@@ -193,7 +200,7 @@ class BPDevJoinBlogWidget extends WP_Widget {
 
         <p>
             <label for="<?php echo esc_attr( $this->get_field_id( 'redirect_url' ) ); ?>"> <?php _e( 'Redirect Url', 'join-blog-widget' ); ?>
-                <input id="<?php echo esc_attr( $this->get_field_id( 'redirect_url' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'redirect_url' ) ); ?>" value="<?php echo esc_url( $args['redirect_url'] ); ?>" class="widefat" />
+                <input id="<?php echo esc_attr( $this->get_field_id( 'redirect_url' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'redirect_url' ) ); ?>" value="<?php echo esc_url( $redirect_url ); ?>" class="widefat" />
             </label>
         </p>
 
