@@ -155,44 +155,44 @@ class BPDevJoinBlogWidget extends WP_Widget {
 		$non_logged_message = isset( $args['non_logged_message'] ) ? $args['non_logged_message'] : '';
 		?>
         <p>
-            <label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php _e( 'Title' ); ?><br/>
+            <label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php _e( 'Title', 'join-blog-widget' ); ?><br/>
                 <input type="text" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" value="<?php echo esc_attr( $args['title'] ); ?>" class="widefat"/>
             </label>
         </p>
         <p>
-            <label for="<?php echo  esc_attr( $this->get_field_id( 'role' ) ); ?>"><?php _e( 'Role' ); ?><br/>
+            <label for="<?php echo  esc_attr( $this->get_field_id( 'role' ) ); ?>"><?php _e( 'Role', 'join-blog-widget' ); ?><br/>
 				<?php $this->print_role_dd( $args['role'] ); ?>
             </label>
         </p>
         <p>
-            <label for="<?php echo  esc_attr( $this->get_field_id( 'button_text' ) ); ?>"><?php _e( 'Join Button Label' ); ?><br/>
+            <label for="<?php echo  esc_attr( $this->get_field_id( 'button_text' ) ); ?>"><?php _e( 'Join Button Label', 'join-blog-widget' ); ?><br/>
                 <input type="text" id="<?php echo  esc_attr( $this->get_field_id( 'button_text' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'button_text' ) ); ?>" value="<?php echo esc_attr( $args['button_text'] ); ?>" class="widefat"/>
             </label>
         </p>
         <p>
-            <label for="<?php $this->get_field_id( 'message_success' ); ?>"> <?php _e( 'Message on Successful Joining' ); ?>
+            <label for="<?php $this->get_field_id( 'message_success' ); ?>"> <?php _e( 'Message on Successful Joining', 'join-blog-widget' ); ?>
                 <textarea id="<?php echo esc_attr( $this->get_field_id( 'message_success' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'message_success' ) ); ?>" class="widefat"><?php echo $args['message_success']; ?></textarea>
             </label>
         </p>
         <p>
-            <label for="<?php echo esc_attr( $this->get_field_id( 'message_error' ) ); ?>"> <?php _e( 'Error Message' ); ?>
+            <label for="<?php echo esc_attr( $this->get_field_id( 'message_error' ) ); ?>"> <?php _e( 'Error Message', 'join-blog-widget' ); ?>
                 <textarea id="<?php echo esc_attr( $this->get_field_id( 'message_error' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'message_error' ) ); ?>" class="widefat"><?php echo $args['message_error']; ?></textarea>
             </label>
         </p>
 
         <p>
-            <label for="<?php echo esc_attr( $this->get_field_id( 'show_to_non_logged' ) ); ?>"> <?php _e( 'Show to Not logged in users?' ); ?>
+            <label for="<?php echo esc_attr( $this->get_field_id( 'show_to_non_logged' ) ); ?>"> <?php _e( 'Show to Not logged in users?', 'join-blog-widget' ); ?>
                 <input id="<?php echo  esc_attr( $this->get_field_id( 'show_to_non_logged' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'show_to_non_logged' ) ); ?>" type="checkbox" value="1" <?php checked( 1, $show_to_non_logged ); ?>
             </label>
         </p>
         <p>
-            <label for="<?php echo esc_attr( $this->get_field_id( 'non_logged_message' ) ); ?>"> <?php _e( 'Message for Non Logged User' ); ?>
+            <label for="<?php echo esc_attr( $this->get_field_id( 'non_logged_message' ) ); ?>"> <?php _e( 'Message for Non Logged User', 'join-blog-widget' ); ?>
                 <textarea id="<?php echo esc_attr( $this->get_field_id( 'non_logged_message' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'non_logged_message' ) ); ?>" class="widefat"><?php echo esc_textarea( $non_logged_message ); ?></textarea>
             </label>
         </p>
 
         <p>
-            <label for="<?php echo esc_attr( $this->get_field_id( 'redirect_url' ) ); ?>"> <?php _e( 'Redirect Url' ); ?>
+            <label for="<?php echo esc_attr( $this->get_field_id( 'redirect_url' ) ); ?>"> <?php _e( 'Redirect Url', 'join-blog-widget' ); ?>
                 <input id="<?php echo esc_attr( $this->get_field_id( 'redirect_url' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'redirect_url' ) ); ?>" value="<?php echo esc_url( $args['redirect_url'] ); ?>" class="widefat" />
             </label>
         </p>
