@@ -62,10 +62,6 @@ class BPDevJoinBlogWidget extends WP_Widget {
 			return;
 		}
 
-		$redirect_url = isset( $instance['redirect_url'] ) ? esc_url( $instance['redirect_url'] ) : '';
-
-		wp_localize_script( 'join-blog-widget', 'JOIN_BLOG_WIDGET', array( 'redirect_url' => $redirect_url ) );
-
 		// display the widget with button to ask joining.
 		echo $args['before_widget'];
 
@@ -101,7 +97,9 @@ class BPDevJoinBlogWidget extends WP_Widget {
 		$id  = esc_attr( $this->id );
 		$url = esc_url( $url );
 
-		echo "<a data-id='{$id}' class='bpdev-join-blog' href='{$url}'>{$instance['button_text']}</a>";
+		$redirect_url = isset( $instance['redirect_url'] ) ? esc_url( $instance['redirect_url'] ) : '';
+
+		echo "<a data-id='{$id}' data-redirect-url='{$redirect_url}' class='bpdev-join-blog' href='{$url}'>{$instance['button_text']}</a>";
 	}
 
 	/**
@@ -237,14 +235,13 @@ class BPDevJoinBlogWidget extends WP_Widget {
 			return false;
 		}
 
-		if ( add_user_to_blog( $blog_id, $user_id, $role ) ) {
-			echo $current_widget_option['message_success'];
-		} else {
-			echo $current_widget_option['message_error'];
+		$add_user = add_user_to_blog( $blog_id, $user_id, $role );
+
+		if ( is_wp_error( $add_user) ) {
+			wp_send_json_error( array( 'message' => $current_widget_option['message_error'] ) );
 		}
 
-		exit( 0 );
-
+		wp_send_json_success( array( 'message' => $current_widget_option['message_success'] ) );
 	}
 
 	/**

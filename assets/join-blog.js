@@ -12,7 +12,11 @@ jQuery(document).ready(function ($) {
                 'widget-id': $id,
                 cookie: encodeURIComponent(document.cookie)
             }, function (resp) {
-                $link.replaceWith(resp);
+                $link.replaceWith(resp.data.message);
+
+                if (resp.success && $link.data('redirectUrl') ) {
+                    window.location.href = $link.data('redirectUrl');
+                }
             }
         );
         return false;//no action for link clicking
