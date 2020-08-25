@@ -128,6 +128,7 @@ class BPDevJoinBlogWidget extends WP_Widget {
 		$instance['role']               = $new_instance['role'];
 		$instance['show_to_non_logged'] = isset( $new_instance['show_to_non_logged'] ) ? absint( $new_instance['show_to_non_logged'] ) : 0;
 		$instance['non_logged_message'] = isset( $new_instance['non_logged_message'] ) ? $new_instance['non_logged_message'] : '';
+		$instance['redirect_url']       = esc_url( $new_instance['redirect_url'] );
 
 		return $instance;
 	}
@@ -147,6 +148,7 @@ class BPDevJoinBlogWidget extends WP_Widget {
 			'show_to_non_logged' => 1,
 			/* translators: %s : registration url */
 			'non_logged_message' => sprintf( __( 'Please create an account to join this site. <a href="%s">Signup Now</a>.', 'join-blog-widget' ), esc_url( wp_registration_url() ) ),
+            'redirect_url'       => '',
 		);
 		$args               = wp_parse_args( (array) $instance, $default );
 		$show_to_non_logged = isset( $args['show_to_non_logged'] ) ? absint( $args['show_to_non_logged'] ) : 0;
@@ -186,6 +188,12 @@ class BPDevJoinBlogWidget extends WP_Widget {
         <p>
             <label for="<?php echo esc_attr( $this->get_field_id( 'non_logged_message' ) ); ?>"> <?php _e( 'Message for Non Logged User' ); ?>
                 <textarea id="<?php echo esc_attr( $this->get_field_id( 'non_logged_message' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'non_logged_message' ) ); ?>" class="widefat"><?php echo esc_textarea( $non_logged_message ); ?></textarea>
+            </label>
+        </p>
+
+        <p>
+            <label for="<?php echo esc_attr( $this->get_field_id( 'redirect_url' ) ); ?>"> <?php _e( 'Redirect Url' ); ?>
+                <input id="<?php echo esc_attr( $this->get_field_id( 'redirect_url' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'redirect_url' ) ); ?>" value="<?php echo esc_url( $args['redirect_url'] ); ?>" class="widefat" />
             </label>
         </p>
 
