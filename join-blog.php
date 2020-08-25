@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Join Blog Widget
- * Version: 1.0.3
+ * Version: 1.0.4
  * Plugin URI: https://buddydev.com/plugins/join-blog-widget/
  * Author: BuddyDev
  * Author URI: https://buddydev.com
