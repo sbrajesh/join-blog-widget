@@ -14,12 +14,12 @@ jQuery(document).ready(function ($) {
             }, function (resp) {
                 $link.replaceWith(resp.data.message);
 
-                if (resp.success && $link.data('redirectUrl') ) {
-                    window.location.href = $link.data('redirectUrl');
+                if (resp.success && typeof resp.data.redirect_url !== "undefined" && resp.data.redirect_url) {
+                    window.location.href = resp.data.redirect_url;
                 }
             }
         );
-        return false;//no action for link clicking
+        return false; // no action for link clicking
     });
 
 

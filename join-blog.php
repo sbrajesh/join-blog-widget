@@ -241,7 +241,13 @@ class BPDevJoinBlogWidget extends WP_Widget {
 			wp_send_json_error( array( 'message' => $current_widget_option['message_error'] ) );
 		}
 
-		wp_send_json_success( array( 'message' => $current_widget_option['message_success'] ) );
+		$rediretc_url = isset( $current_widget_option['redirect_url'] ) ? esc_url( $current_widget_option['redirect_url'] ) : '';
+		wp_send_json_success(
+			array(
+				'message'      => $current_widget_option['message_success'],
+				'redirect_url' => $rediretc_url,
+			)
+		);
 	}
 
 	/**
