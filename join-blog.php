@@ -258,7 +258,11 @@ class BPDevJoinBlogWidget extends WP_Widget {
 	private function print_role_dd( $selected = 'subscriber' ) {
 
         if ( ! function_exists( 'wp_dropdown_roles' ) ) {
-            require_once ABSPATH . '/wp-admin/admin.php';
+            require_once ABSPATH . '/wp-admin/includes/template.php';
+        }
+
+        if ( ! function_exists( 'get_editable_roles' ) ) {
+            require_once ABSPATH . 'wp-admin/includes/user.php';
         }
 
 		?>
