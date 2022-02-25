@@ -257,6 +257,10 @@ class BPDevJoinBlogWidget extends WP_Widget {
 	 */
 	private function print_role_dd( $selected = 'subscriber' ) {
 
+        if ( ! function_exists( 'wp_dropdown_roles' ) ) {
+            require_once ABSPATH . '/wp-admin/admin.php';
+        }
+
 		?>
         <select name="<?php echo esc_attr( $this->get_field_name( 'role' ) ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'role' ) ); ?>">
 			<?php wp_dropdown_roles( $selected ); ?>
